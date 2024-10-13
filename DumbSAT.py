@@ -27,22 +27,65 @@ import time
 import random
 import string
 
+# personal tests 
+Wff = [[1, -2], [-1, 3], [2]]
+Nvars = 3
+
+Wff = [[1], [-1]]
+Nvars = 1
+
 # Following is an example of a wff with 3 variables, 3 literals/clause, and 4 clauses
-Num_Vars=3
-Num_Clauses=4
-wff=[[1,-2,-2],[2,3,3],[-1,-3,-3],[-1,-2,3],[1,2,-3]]
+#Num_Vars=3
+#Num_Clauses=4
+#wff=[[1,-2,-2],[2,3,3],[-1,-3,-3],[-1,-2,3],[1,2,-3]]
 
 
 # Following is an example of a wff with 3 variables, 3 literals/clause, and 8 clauses
-Num_Clauses=8
-wff=[[-1,-2,-3],[-1,-2,3],[-1,2,-3],[-1,2,3],[1,-2,-3],[1,-2,3],[1,2,-3],[1,2,3]]
+#Num_Clauses=8
+#wff=[[-1,-2,-3],[-1,-2,3],[-1,2,-3],[-1,2,3],[1,-2,-3],[1,-2,3],[1,2,-3],[1,2,3]]
 
+def unit_clause(Wff,Assignment): 
+    c = True
+    while c: 
+        c = False
+        for clause in Wff: 
+            if len(clause) == 1:
+                literal = clause[0]
+                index = abs(literal)
+                if literal > 0: 
+                    Assignment[index] = 1
+                else:
+                    Assignment[index] = 0
+                # modify wff by implementing unit clause rules 
+                Wff2 = []
+                for clause2 in Wff:
+                    if literal in clause2: # skip clauses with literal
+                        continue 
+                    elif -literal in clause2: # if -literal, do not append it to our new wff 
+                        newclause = [x for x in clause2 if x != -literal]
+                        if len(newclause) == 0:
+                            return False, Assignment, Wff
+                        else:
+                            Wff2.append(newclause)
+                    else: 
+                        Wff2.append(clause2)
+                Wff = Wff2 
+                c = True 
+                break 
+    return True, Assignment, Wff
 
 def check(Wff,Nvars,Nclauses,Assignment):
 # Run thru all possibilities for assignments to wff
 # Starting at a given Assignment (typically array of Nvars+1 0's)
 # At each iteration the assignment is "incremented" to next possible
 # At the 2^Nvars+1'st iteration, stop - tried all assignments
+
+    # call unit clause function to simplify before doing brute force solution
+    Satisfiable, Assignment, Wff = unit_clause(Wff, Assignment)
+    if not Satisfiable: return False 
+    if not Wff: return True 
+
+
     Satisfiable=False
     while (Assignment[Nvars+1]==0):
         # Iterate thru clauses, quit if not satisfiable
@@ -78,6 +121,21 @@ def build_wff(Nvars,Nclauses,LitsPerClause):
         wff.append(clause)
     return wff
 
+def test_case(Wff, Nvars): 
+    Nclauses = len(Wff)
+    Assignment = [0] * (Nvars + 1)
+    result = check(Wff, Nvars, Nclauses, Assignment)
+
+    if result:
+        print('Satisfiable')
+        print("Assignment", Assignment[1:])
+
+    else:
+        print("Unsatisfiable")
+
+test_case(Wff, Nvars)
+
+'''
 def test_wff(wff,Nvars,Nclauses):
     Assignment=list((0 for x in range(Nvars+2)))
     start = time.time() # Start timer
@@ -85,8 +143,11 @@ def test_wff(wff,Nvars,Nclauses):
     end = time.time() # End timer
     exec_time=int((end-start)*1e6)
     return [wff,Assignment,SatFlag,exec_time]
+    '''
 
-def run_cases(TestCases,ProbNum,resultsfile,tracefile,cnffile):
+
+
+'''def run_cases(TestCases,ProbNum,resultsfile,tracefile,cnffile):
     # TestCases: list of 4tuples describing problem
     #   0: Nvars = number of variables
     #   1: NClauses = number of clauses
@@ -259,3 +320,5 @@ cnffile = r'cnffile'# Each of these list entries describes a series of random wf
 #run_cases(TC2,ProbNum,resultsfile,tracefile,cnffile)
 #run_cases(SAT2,ProbNum,resultsfile,tracefile,cnffile)
 run_cases(TestCases,ProbNum,resultsfile,tracefile,cnffile) # This takes a Looong Time!! 40  minutes
+
+'''
