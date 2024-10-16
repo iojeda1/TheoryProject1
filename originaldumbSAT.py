@@ -1,49 +1,43 @@
-
+#                    Brute Force SAT
+# This file generates a set of random wffs and tests each for satisfiability.
+#   The test returns "Satisfiable" or not, and the time it took to determine that.
+# A wff is expressed as a list of lists where each internal list is a clause.
+#    and each integer within a clause list is a literal
+#    A positive integer such as "3" means that clause is true if variable 3 is true
+#    A negative integer such as "-3" means that clause is true if variable 3 is false
+#  A clause is satisfiable if at least one literal is true
+#  A wff is satisfiable if all clauses are satisfiable
+# An assignment to n variables is a list of n 0s or 1s (0=>False, 1=>True)
+#    where assignment[i] is value for variable i+1 (there is no variable 0)
+#
+# build_wff builds a random wff with specified # of clauses, variables,
+#   and literals/clause
+# check takes a wff, generates all possible assignments,
+#   and determines if any assignment satisfies it.
+#   If so it stops and returns the time ans assignment
+# test_wff builds a random wff with certain structure
+#
+# run_cases takes a list of 4-tuples and for each one generates a number of wffs
+#    with the same specified characteristices, and test each one.
+#    It outputs to a file (in current directory) each wff in cnf format,
+#    and also for each case it dumps a row to a .csv file that contains
+#       the test conditions and the satisfying assignment if it exists
 
 import time
 import random
 import string
 
 # Following is an example of a wff with 3 variables, 3 literals/clause, and 4 clauses
-#Num_Vars=3
-#Num_Clauses=4
-#wff=[[1,-2,-2],[2,3,3],[-1,-3,-3],[-1,-2,3],[1,2,-3]]
+Num_Vars=3
+Num_Clauses=4
+wff=[[1,-2,-2],[2,3,3],[-1,-3,-3],[-1,-2,3],[1,2,-3]]
 
 
 # Following is an example of a wff with 3 variables, 3 literals/clause, and 8 clauses
-#Num_Clauses=8
-#wff=[[-1,-2,-3],[-1,-2,3],[-1,2,-3],[-1,2,3],[1,-2,-3],[1,-2,3],[1,2,-3],[1,2,3]]
+Num_Clauses=8
+wff=[[-1,-2,-3],[-1,-2,3],[-1,2,-3],[-1,2,3],[1,-2,-3],[1,-2,3],[1,2,-3],[1,2,3]]
 
-def backtrack_search(Wff,Assignment,Index):
-    if Index == len(Assignment):
-        return inc_search(Wff,Assignment)
-    
-    Assignment[Index] = 0
-    if backtrack_search(Wff,Assignment,Index+1):
-        return True
-    
-    Assignment[Index] = 1
-    if backtrack_search(Wff,Assignment,Index+1):
-        return True
-    
-    return False
 
-def inc_search(Wff,Assignment): 
-    for clause in Wff:
-        satisfied = False
-        for literal in clause:
-            Index = abs(literal)
-            # if -3 is False, -3 is 3 so literal is satisfied 
-            if (literal < 0 and Assignment[Index] == 0) :
-                satisfied = True
-                break
-            elif (literal > 0 and Assignment[Index] == 1):
-                satisfied = True
-                break
-        if not satisfied:
-            return False
-    return True
-'''         
 def check(Wff,Nvars,Nclauses,Assignment):
 # Run thru all possibilities for assignments to wff
 # Starting at a given Assignment (typically array of Nvars+1 0's)
@@ -72,7 +66,7 @@ def check(Wff,Nvars,Nclauses,Assignment):
                 break
             else: Assignment[i]=0
     return Satisfiable
- '''   
+    
 def build_wff(Nvars,Nclauses,LitsPerClause):
     wff=[]
     for i in range(1,Nclauses+1):
@@ -84,12 +78,10 @@ def build_wff(Nvars,Nclauses,LitsPerClause):
         wff.append(clause)
     return wff
 
-
 def test_wff(wff,Nvars,Nclauses):
     Assignment=list((0 for x in range(Nvars+2)))
     start = time.time() # Start timer
-    SatFlag=backtrack_search(wff,Assignment,1)
-    #SatFlag=check(wff,Nvars,Nclauses,Assignment)
+    SatFlag=check(wff,Nvars,Nclauses,Assignment)
     end = time.time() # End timer
     exec_time=int((end-start)*1e6)
     return [wff,Assignment,SatFlag,exec_time]
@@ -237,7 +229,7 @@ TestCases=[
     [20,200,6,10],
     [22,220,6,10],
     [24,240,6,10]]
-'''
+
 TC2=[
     [4,10,2,10],
     [8,16,2,10],
@@ -256,7 +248,7 @@ SAT2=[
     [26,45,2,10],
     [28,47,2,10]
     ]
-'''
+
 trace=True
 ShowAnswer=True # If true, record evaluation result in header of each wff in cnffile
 ProbNum = 3
@@ -269,4 +261,17 @@ cnffile = r'cnffile'# Each of these list entries describes a series of random wf
 run_cases(TestCases,ProbNum,resultsfile,tracefile,cnffile) # This takes a Looong Time!! 40  minutes
 
 
+
                     
+
+
+    
+
+
+        
+                
+            
+            
+                
+
+            

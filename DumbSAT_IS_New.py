@@ -5,7 +5,6 @@ def incremental(Wff, Nvars, Nclauses, Assignment):
     satisfiable = False
     attempts = 0 
     max_attempts = 2**Nvars  # 2^N max attempts
-
     while attempts < max_attempts:
         satisfiable = True  
         for i in range(0, Nclauses):
@@ -23,14 +22,12 @@ def incremental(Wff, Nvars, Nclauses, Assignment):
             if not clauseSat:
                 satisfiable = False
                 break
-
         if satisfiable:
             return True, Assignment
     # make small flips to generate more combinations
         flip = random.randint(1, Nvars)
         Assignment[flip] = 1 - Assignment[flip]
         attempts += 1
-
     return False, Assignment
 
 
