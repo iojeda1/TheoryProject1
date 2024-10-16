@@ -1,48 +1,69 @@
-#                    Brute Force SAT
-# This file generates a set of random wffs and tests each for satisfiability.
-#   The test returns "Satisfiable" or not, and the time it took to determine that.
-# A wff is expressed as a list of lists where each internal list is a clause.
-#    and each integer within a clause list is a literal
-#    A positive integer such as "3" means that clause is true if variable 3 is true
-#    A negative integer such as "-3" means that clause is true if variable 3 is false
-#  A clause is satisfiable if at least one literal is true
-#  A wff is satisfiable if all clauses are satisfiable
-# An assignment to n variables is a list of n 0s or 1s (0=>False, 1=>True)
-#    where assignment[i] is value for variable i+1 (there is no variable 0)
-#
-# build_wff builds a random wff with specified # of clauses, variables,
-#   and literals/clause
-# check takes a wff, generates all possible assignments,
-#   and determines if any assignment satisfies it.
-#   If so it stops and returns the time ans assignment
-# test_wff builds a random wff with certain structure
-#
-# run_cases takes a list of 4-tuples and for each one generates a number of wffs
-#    with the same specified characteristices, and test each one.
-#    It outputs to a file (in current directory) each wff in cnf format,
-#    and also for each case it dumps a row to a .csv file that contains
-#       the test conditions and the satisfying assignment if it exists
+# Unit Clause 
 
 import time
 import random
 import string
 
+# personal tests 
+#Wff = [[1, -2], [1, 3], [2], [4]]
+#Nvars = 4
+
+#Wff = [[1], [-1]]
+#Nvars = 1
+
 # Following is an example of a wff with 3 variables, 3 literals/clause, and 4 clauses
-Num_Vars=3
-Num_Clauses=4
-wff=[[1,-2,-2],[2,3,3],[-1,-3,-3],[-1,-2,3],[1,2,-3]]
+#Nvars=3
+#Nclauses=5
+#Wff=[[1,-2,-2],[2,3,3],[-1,-3,-3],[-1,-2,3],[1,2,-3]]
 
 
 # Following is an example of a wff with 3 variables, 3 literals/clause, and 8 clauses
-Num_Clauses=8
-wff=[[-1,-2,-3],[-1,-2,3],[-1,2,-3],[-1,2,3],[1,-2,-3],[1,-2,3],[1,2,-3],[1,2,3]]
+#Nuclauses=8
+#Wff=[[-1,-2,-3],[-1,-2,3],[-1,2,-3],[-1,2,3],[1,-2,-3],[1,-2,3],[1,2,-3],[1,2,3]]
+#Nvars = 3
 
+def unit_clause(Wff,Assignment): 
+    c = True
+    while c: 
+        c = False
+        for clause in Wff: 
+            if len(clause) == 1:
+                literal = clause[0]
+                index = abs(literal)
+                if literal > 0: 
+                    Assignment[index] = 1
+                else:
+                    Assignment[index] = 0
+                # modify wff by implementing unit clause rules 
+                Wff2 = []
+                for clause2 in Wff:
+                    if literal in clause2: # skip clauses with literal
+                        continue 
+                    elif -literal in clause2: # if -literal, do not append it to our new wff 
+                        newclause = [x for x in clause2 if x != -literal]
+                        if len(newclause) == 0:
+                            return False, Assignment, Wff
+                        else:
+                            Wff2.append(newclause)
+                    else: 
+                        Wff2.append(clause2)
+                Wff = Wff2 
+                c = True 
+                break 
+    return True, Assignment, Wff
 
 def check(Wff,Nvars,Nclauses,Assignment):
 # Run thru all possibilities for assignments to wff
 # Starting at a given Assignment (typically array of Nvars+1 0's)
 # At each iteration the assignment is "incremented" to next possible
 # At the 2^Nvars+1'st iteration, stop - tried all assignments
+
+    # call unit clause function to simplify before doing brute force solution
+    Satisfiable, Assignment, Wff = unit_clause(Wff, Assignment)
+    if not Satisfiable: return False 
+    if not Wff: return True 
+
+
     Satisfiable=False
     while (Assignment[Nvars+1]==0):
         # Iterate thru clauses, quit if not satisfiable
@@ -78,6 +99,22 @@ def build_wff(Nvars,Nclauses,LitsPerClause):
         wff.append(clause)
     return wff
 
+'''
+def test_case(Wff, Nvars): 
+    Nclauses = len(Wff)
+    Assignment = [0] * (Nvars + 2)
+    result = check(Wff, Nvars, Nclauses, Assignment)
+
+    if result:
+        print('Satisfiable')
+        print("Assignment", Assignment[1:len(Assignment)-1])
+
+    else:
+        print("Unsatisfiable")
+
+test_case(Wff, Nvars)
+'''
+
 def test_wff(wff,Nvars,Nclauses):
     Assignment=list((0 for x in range(Nvars+2)))
     start = time.time() # Start timer
@@ -85,6 +122,7 @@ def test_wff(wff,Nvars,Nclauses):
     end = time.time() # End timer
     exec_time=int((end-start)*1e6)
     return [wff,Assignment,SatFlag,exec_time]
+
 
 def run_cases(TestCases,ProbNum,resultsfile,tracefile,cnffile):
     # TestCases: list of 4tuples describing problem
@@ -228,7 +266,7 @@ TestCases=[
     [18,180,6,10],
     [20,200,6,10],
     [22,220,6,10],
-    [24,240,6,10]]
+    [24,240,6,10] ]
 
 TC2=[
     [4,10,2,10],
@@ -259,7 +297,3 @@ cnffile = r'cnffile'# Each of these list entries describes a series of random wf
 #run_cases(TC2,ProbNum,resultsfile,tracefile,cnffile)
 #run_cases(SAT2,ProbNum,resultsfile,tracefile,cnffile)
 run_cases(TestCases,ProbNum,resultsfile,tracefile,cnffile) # This takes a Looong Time!! 40  minutes
-
-
-
-                    
