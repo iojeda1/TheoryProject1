@@ -235,9 +235,9 @@ SAT2=[
 trace=True
 ShowAnswer=True # If true, record evaluation result in header of each wff in cnffile
 ProbNum = 3
-resultsfile = r'resultsfile'
-tracefile = r'tracefile'
-cnffile = r'cnffile'# Each of these list entries describes a series of random wffs to generate
+resultsfile = r'ISresultsfile'
+tracefile = r'IStracefile'
+cnffile = r'IScnffile'# Each of these list entries describes a series of random wffs to generate
 
 #run_cases(TC2,ProbNum,resultsfile,tracefile,cnffile)
 #run_cases(SAT2,ProbNum,resultsfile,tracefile,cnffile)
