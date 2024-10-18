@@ -46,9 +46,9 @@ The following test cases are included in each code file as functions (wff):
 
 | File Name                                  | Description                                                                                      |
 |--------------------------------------------|--------------------------------------------------------------------------------------------------|
-| `dpll_results_Isabel_Phoebe_Pablo.csv`     | Results from the DPLL algorithm. Contains wff formula, satisfiability, assignment, and execution time. |
-| `incremental_results_Isabel_Phoebe_Pablo.csv` | Results from the incremental search algorithm.                                                    |
-| `unit_results_Isabel_Phoebe_Pablo.csv`     | Results from the unit clause algorithm.                                                           |
+| `output_dpll_results_Isabel_Phoebe_Pablo.csv`     | Results from the DPLL algorithm. Contains wff formula, satisfiability, assignment, and execution time. |
+| `output_incremental_results_Isabel_Phoebe_Pablo.csv` | Results from the incremental search algorithm.                                                    |
+| `output_unit_results_Isabel_Phoebe_Pablo.csv`     | Results from the unit clause algorithm.                                                           |
 
 ### Plots
 
