@@ -54,15 +54,15 @@ The following test cases are included in each code file as functions (wff):
 
 1. **Graph 1: DPLL Algorithm Performance**
    - This graph shows the performance of the DPLL algorithm in terms of execution time as the complexity of the wff formulas increases. It highlights how the algorithm handles both satisfiable and unsatisfiable cases.
-   - ![Graph 1](https://github.com/iojeda1/TheoryProject1/blob/main/Plot_DPLL_Isabel_Phoebe_Pablo.jpg)
+   - ![Graph 1](https://github.com/iojeda1/TheoryProject1/blob/main/plots/Plot_DPLL_Isabel_Phoebe_Pablo.jpg)
 
 2. **Graph 2: Incremental Search Performance**
    - This graph illustrates the performance of the incremental search algorithm. It compares the execution times across different test cases, showcasing its volatility, particularly in larger, unsatisfiable problems.
-   - ![Graph 2](https://github.com/iojeda1/TheoryProject1/blob/main/Plot_IncrementalSearch_Isabel_Phoebe_Pablo.png)
+   - ![Graph 2](https://github.com/iojeda1/TheoryProject1/blob/main/plots/Plot_IncrementalSearch_Isabel_Phoebe_Pablo.png)
 
 3. **Graph 3: Unit Clause Algorithm Performance**
    - This graph compares the efficiency of the unit clause algorithm in terms of time taken to solve satisfiable and unsatisfiable cases. It demonstrates the algorithm’s quick simplification of problems using unit propagation.
-   - ![Graph 3](https://github.com/iojeda1/TheoryProject1/blob/main/Plot_UnitClause_Isabel_Phoebe_Pablo.png)
+   - ![Graph 3](https://github.com/iojeda1/TheoryProject1/blob/main/plots/Plot_UnitClause_Isabel_Phoebe_Pablo.png)
 
 ## Programming Languages and Libraries
 
