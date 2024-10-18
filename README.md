@@ -24,15 +24,46 @@
 
 ## Included Files
 
-| File/Folder Name         | Description                                                                                      |
-|--------------------------|--------------------------------------------------------------------------------------------------|
-| `DumbSAT_DPLL_Final_Isabel_Phoebe_Pablo.py`   | Implements DPLL algorithm to check satisfiability of wff formulas.                               |
-| `DumbSAT_IS_Isabel_Phoebe_Pablo.py`           | Implements incremental search to check satisfiability of wff formulas.                           |
-| `DumbSAT_UnitClause_Isabel_Phoebe_Pablo.py`   | Implements unit clause algorithm to check satisfiability of wff formulas.                        |
-| `dpll_results_Isabel_Phoebe_Pablo.csv`        | Contains results for DPLL algorithm tests.                                                       |
-| `incremental_results_Isabel_Phoebe_Pablo.csv` | Contains results for incremental search algorithm tests.                                         |
-| `unit_results_Isabel_Phoebe_Pablo.csv`        | Contains results for unit clause algorithm tests.                                                |
+### Code Files
 
+| File Name                                  | Description                                                                                      |
+|--------------------------------------------|--------------------------------------------------------------------------------------------------|
+| `DumbSAT_DPLL_Final_Isabel_Phoebe_Pablo.py`| Implements DPLL algorithm to check satisfiability of wff formulas.                                |
+| `DumbSAT_IS_Isabel_Phoebe_Pablo.py`        | Implements incremental search to check satisfiability of wff formulas.                            |
+| `DumbSAT_UnitClause_Isabel_Phoebe_Pablo.py`| Implements unit clause algorithm to check satisfiability of wff formulas.                         |
+
+### Test Files
+
+The following test cases are included in each code file as functions:
+
+- `[[1, -2], [-1, 2]]`
+- `[[1, 2], [-1, 2], [1, -2]]`
+- `[[1, 2, 3], [-1, -2], [2, -3], [1, 2]]`
+- `[[1, 2], [1, -2], [2, 3], [-1, 3], [-3, -2]]`
+- `[[1], [-1]]`
+
+### Output Files
+
+| File Name                                  | Description                                                                                      |
+|--------------------------------------------|--------------------------------------------------------------------------------------------------|
+| `dpll_results_Isabel_Phoebe_Pablo.csv`     | Results from the DPLL algorithm. Contains wff formula, satisfiability, assignment, and execution time. |
+| `incremental_results_Isabel_Phoebe_Pablo.csv` | Results from the incremental search algorithm.                                                    |
+| `unit_results_Isabel_Phoebe_Pablo.csv`     | Results from the unit clause algorithm.                                                           |
+
+### Plots
+
+1. **Graph 1: DPLL Algorithm Performance**
+   - This graph shows the performance of the DPLL algorithm in terms of execution time as the complexity of the wff formulas increases. It highlights how the algorithm handles both satisfiable and unsatisfiable cases.
+   - ![Graph 1](https://github.com/iojeda1/TheoryProject1/blob/main/Plot_DPLL_Isabel_Phoebe_Pablo.jpg)
+
+2. **Graph 2: Incremental Search Performance**
+   - This graph illustrates the performance of the incremental search algorithm. It compares the execution times across different test cases, showcasing its volatility, particularly in larger, unsatisfiable problems.
+   - ![Graph 2](https://github.com/iojeda1/TheoryProject1/blob/main/Plot_IncrementalSearch_Isabel_Phoebe_Pablo.png)
+
+3. **Graph 3: Unit Clause Algorithm Performance**
+   - This graph compares the efficiency of the unit clause algorithm in terms of time taken to solve satisfiable and unsatisfiable cases. It demonstrates the algorithm’s quick simplification of problems using unit propagation.
+   - ![Graph 3](https://github.com/iojeda1/TheoryProject1/blob/main/Plot_UnitClause_Isabel_Phoebe_Pablo.png)
+Instructions for Uploading:
 ## Programming Languages and Libraries
 
 - **Language**: Python
