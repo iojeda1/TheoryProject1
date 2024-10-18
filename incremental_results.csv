@@ -1,7 +1,0 @@
-Test Case,WFF,SAT Result,Assignment,Execution Time (microseconds)
-1,"[[1, -2], [-1, 2]]",Satisfiable,"[1, 1]",9
-2,"[[1, 2], [-1, 2], [1, -2]]",Unsatisfiable,"[1, 0]",8
-3,"[[1, 2, 3], [-1, -2], [2, -3], [1, 2]]",Satisfiable,"[0, 1, 0]",2
-4,"[[1, 2], [1, -2], [2, 3], [-1, 3], [-3, -2]]",Unsatisfiable,"[1, 0, 1]",13
-5,"[[1], [-1]]",Unsatisfiable,[0],3
-Total,N/A,N/A,N/A,82
