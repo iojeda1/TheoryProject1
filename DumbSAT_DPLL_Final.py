@@ -1,5 +1,8 @@
 # DPLL 
+# Theory of Computing Project01
+# Isabel Ojeda, Phoebe Huang, Pablo Oliva Quintana 
 import time
+import csv
 
 # DPLL SAT solver with improved variable tracking and backtracking
 def dpll_sat_solve(clause_set, assignment, num_vars):
@@ -85,28 +88,52 @@ def dpll_test_cases(num):
         Nclauses = 2
         return clause_set, Nvars, Nclauses
 
-# Function to test DPLL with manual test cases
+# Function to test DPLL with manual test cases and return results for CSV
 def test_dpll_wff(num):
     clause_set, Nvars, Nclauses = dpll_test_cases(num)
     partial_assignment = set()
     start_time = time.time()
     result = dpll_sat_solve(clause_set, partial_assignment, Nvars)
     exec_time = int((time.time() - start_time) * 1e6)  # Execution time in microseconds
-    
-    print(f"Test Case {num}: (wff form): {clause_set}")
+
     if result:
         assignment_str = format_assignment(result, Nvars)
-        print(f"SAT Result: Satisfiable")
-        print(f"Assignment: {assignment_str}")
+        sat_result = "Satisfiable"
     else:
-        print(f"SAT Result: Unsatisfiable")
+        assignment_str = 'N/A'
+        sat_result = "Unsatisfiable"
     
-    print(f"Execution Time: {exec_time} µs\n")
+    return {
+        "Test Case": num,
+        "WFF": clause_set,
+        "SAT Result": sat_result,
+        "Assignment": assignment_str,
+        "Execution Time (microseconds)": exec_time
+    }
+    
+# Function to run all manual test cases and gather results for CSV
+def run_dpll_tests():
+    results = []
+    start_time = time.time()  # Start timer for total execution time
+    for num in range(1, 5+1):  # Running 5 test cases
+        result = test_dpll_wff(num)
+        results.append(result)
+    total_exec_time = int((time.time() - start_time) * 1e6)  # Total execution time in microseconds
+    return results, total_exec_time
 
-# Function to run all manual test cases for DPLL
-def run_dpll_manual_tests():
-    for num in range(1, 6):
-        test_dpll_wff(num)
+# Run DPLL tests and capture the results
+results, total_exec_time = run_dpll_tests()
 
-# Run the manual test cases
-run_dpll_manual_tests()
+# Now write results to a CSV file
+with open('dpll_results.csv', mode='w', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerow(["Test Case", "WFF", "SAT Result", "Assignment", "Execution Time (microseconds)"])  # Write header
+    for result in results:
+        writer.writerow([result["Test Case"], result["WFF"], result["SAT Result"], result["Assignment"], result["Execution Time (microseconds)"]])
+    
+    # Add total execution time as the final row
+    writer.writerow(["Total", "N/A", "N/A", "N/A", total_exec_time])
+
+# Print confirmation message
+print(f"DPLL results successfully written into 'dpll_results.csv', including Total Execution Time: {total_exec_time} microseconds")
+

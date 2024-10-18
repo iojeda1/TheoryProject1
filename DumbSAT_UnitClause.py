@@ -143,20 +143,22 @@ def run_cases():
         result = test_wff(num)
         results.append(result)  # Append result for each test case
     end = time.time()  # End timer
-    exec_time = int((end - start) * 1e6)
+    total_exec_time = int((end - start) * 1e6)  # Total execution time in microseconds
     
-    return results, exec_time
+    return results, total_exec_time
 
 # Run test cases and save results to a CSV file
 results, total_exec_time = run_cases()
 
 # Now write results to CSV
-with open('unit.csv', mode='w', newline='') as file:
+with open('unit_results.csv', mode='w', newline='') as file:
     writer = csv.writer(file)
     writer.writerow(["Test Case", "WFF", "SAT Result", "Assignment", "Execution Time (microseconds)"])  # Write header
     for result in results:
         writer.writerow([result["Test Case"], result["WFF"], result["SAT Result"], result["Assignment"], result["Execution Time (microseconds)"]])
+    
+    # Add total execution time as the final row
+    writer.writerow(["Total", "N/A", "N/A", "N/A", total_exec_time])
 
-# Optional: print total execution time
-print("Results succesfully written into unit.csv")
-
+# Print confirmation
+print(f"Unit Clause Results Successfully Written into 'unit_results.csv', including Total Execution Time: {total_exec_time} microseconds")
