@@ -34,7 +34,7 @@
 
 ### Test Files
 
-The following test cases are included in each code file as functions:
+The following test cases are included in each code file as functions (wff):
 
 - `[[1, -2], [-1, 2]]`
 - `[[1, 2], [-1, 2], [1, -2]]`
